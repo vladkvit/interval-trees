@@ -1,10 +1,22 @@
 import numpy as np
 
 def intersect(int1, int2):
-    if int1.right < int2.left:
+    #less_comparator
+    if int1.inclusiveR and int2.inclusiveL:
+        less_comparator = lambda a, b: a < b
+    else:
+        less_comparator = lambda a, b: a <= b
+    if less_comparator( int1.right, int2.left):
         return False
-    if int2.right < int1.left:
+
+    if int1.inclusiveL and int2.inclusiveR:
+        less_comparator = lambda a, b: a < b
+    else:
+        less_comparator = lambda a, b: a <= b
+
+    if less_comparator( int2.right, int1.left):
         return False
+
     return True
 
 
@@ -16,14 +28,22 @@ class Interval:
         self.inclusiveL = inclusiveL
         self.inclusiveR = inclusiveR
 
+    def prettyprint(self, endx="\n"):
+        print(self.left, self.right, \
+            "T" if self.inclusiveL else "F", \
+            "T" if self.inclusiveL else "F", end=endx)
 
-intlist = []
+def debuggy():
+    intlist = []
 
-for x in range(0, 5):
-    tmpint = Interval( x, x + 3 )
-    intlist.append( tmpint )
+    for x in range(0, 5):
+        tmpint = Interval( x, x + 3 )
+        intlist.append( tmpint )
 
-for x, y in np.ndindex(( len(intlist), len(intlist) )):
-    print(x, y)
-    print( intersect( intlist[x], intlist[y] ) )
+    for x in range(0, len(intlist)):
+        print( "[ ", end="" )
 
+        for y in range(0, len(intlist)):
+            letter = "T " if intersect( intlist[x], intlist[y] ) else "F "
+            print( letter, end="" )
+        print( "]")
