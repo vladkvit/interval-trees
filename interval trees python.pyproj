@@ -23,9 +23,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="interval_trees_python.py" />
-    <Compile Include="test1.py">
+    <Compile Include="test_intervals.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="test_interval_trees.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

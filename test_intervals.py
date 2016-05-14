@@ -27,6 +27,24 @@ class Test_test1(unittest.TestCase):
         b = itv.Interval(2,3, True, False)
         self.assertTrue( itv.intersect(a,b) )
 
+    def test_F(self):
+        a = itv.Interval(1,2, True, True)
+        b = itv.Interval(1,2, True, True)
+        self.assertTrue( itv.intersect(a,b) )
+
+        a = itv.Interval(1,2, False, False)
+        b = itv.Interval(1,2, False, False)
+        self.assertTrue( itv.intersect(a,b) )
+
+    def test_G(self):
+        a = itv.Interval(1,2, True, True)
+        b = itv.Interval(3,4, True, True)
+        self.assertFalse( itv.intersect(a,b) )
+
+        a = itv.Interval(1,2, False, False)
+        b = itv.Interval(3,4, False, False)
+        self.assertFalse( itv.intersect(a,b) )
+
     def test_moreA(self):
         intlist = []
 
@@ -34,7 +52,6 @@ class Test_test1(unittest.TestCase):
             tmpint = itv.Interval( x, x + 3 )
             intlist.append( tmpint )
         
-
 
 
 if __name__ == '__main__':
