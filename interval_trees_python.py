@@ -104,7 +104,7 @@ class IntervalTree:
         if result == 0:
             self.root = IntTreeNode( int1, (int1.left+int1.right)/2)
 
-    def insert_new_node( parent, newnode ):
+    def insert_new_node( self, parent, newnode ):
         assert( parent != None )
         pass
 
