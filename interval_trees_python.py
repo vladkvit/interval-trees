@@ -94,6 +94,12 @@ class IntTreeNode:
         self.right = None
         self.data = [data]
         self.point = point
+        self.range = data
+
+    def add_data(self, newint):
+        assert(newint.point_location( self.point ) == 0)
+        self.data.append(newint)
+        self.range = int_union( self.range, newint )
 
 class IntervalTree:
     def __init__(self):
@@ -114,7 +120,7 @@ class IntervalTree:
                     node = node.left
                 else:
                     #insert into node
-                    node.data.append( int1 )
+                    node.add_data( int1 )
                     break
             if node == None:
                 self.insert_new_node(parent, IntTreeNode( int1, (int1.left+int1.right)/2),
@@ -129,10 +135,10 @@ class IntervalTree:
         elif direction > 0:
             result = self.insert_recursive_helper(self, int1, node.left)
         else:
-            node.data.append( int1 )
+            node.add_data( int1 )
 
         if result == 0:
-            self.insert_new_node( parent, IntTreeNode( int1, (int1.left+int1.right)/2),
+            self.insert_new_node( self, IntTreeNode( int1, (int1.left+int1.right)/2),
                                   direction * -1 )
 
         return 1
@@ -151,9 +157,14 @@ class IntervalTree:
         else:
             assert( False )
 
+    #answers "what lies in this interval"
     def queryinterval(self, int1):
+        traverse_list = []
         node = self.root
         while node != None:
+            if intersect( node.range, int1 ) == 0:
+                traverse_list.append( node.data )
+
             direction = int1.point_location( node.point )
             if direction < 0:
                 node = node.right
@@ -161,7 +172,8 @@ class IntervalTree:
                 node = node.left
             else:
                 break
-        return node
+        
+        return traverse_list
 
     #returns whether point position is within the interval tree or not
     def query(self, position):
