@@ -163,7 +163,7 @@ class IntervalTree:
         node = self.root
         while node != None:
             if intersect( node.range, int1 ) == 0:
-                traverse_list.append( node.data )
+                traverse_list.extend( node.data )
 
             direction = int1.point_location( node.point )
             if direction < 0:
@@ -173,6 +173,9 @@ class IntervalTree:
             else:
                 break
         
+        for item in traverse_list:
+            if intersect( item, int1 ) != 0:
+                traverse_list.remove( item )
         return traverse_list
 
     #returns whether point position is within the interval tree or not
